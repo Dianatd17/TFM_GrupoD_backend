@@ -1,7 +1,9 @@
 const router = require('express').Router();
 
 router.use('/especialidades', require('./api/especialidades'));
-router.use('/logopedas', require('./api/logopedas'));
+router.use('/logopedasList', require('./api/logopedasList'));
+router.use('/notificaciones', require('./api/notificaciones'));
+router.use('/pacientes', require('./api/pacientes'));
 
 
 
