@@ -1,7 +1,7 @@
 {
-  "name": "actividad9",
+  "name": "logopedasback",
   "version": "1.0.0",
-  "description": "API REST proyecto tipo blog",
+  "description": "App backend logopedas",
   "main": "index.js",
   "scripts": {
     "start": "node index.js",
