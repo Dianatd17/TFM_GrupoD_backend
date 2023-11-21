@@ -1,14 +1,16 @@
-const express = require('express');
+const http = require('node:http');
+const app = require('./src/app');
 
 require('dotenv').config();
 
-const appback = express();
+require('./src/config/db');
 
-// GET http://localhost:3000/api/users
-appback.get('/api/users', (req, res) => {
-  res.end('Devuelvo todos los usuarios');
-});
+const server = http.createServer(app);
 
-appback.listen(process.env.PORT, () => {
-  console.log(`Servidor escuchando en puerto ${process.env.DB_PORT}`);
-});
+const PORT = process.env.PORT || 3000;
+server.listen(PORT);
+
+server.on('listening', () =>
+  console.log(`Servidor escuchando en el puerto ${PORT}`)
+);
+server.on('error', (error) => console.log(error));

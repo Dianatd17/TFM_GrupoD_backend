@@ -1,18 +1,22 @@
 {
-  "name": "tfm_grupod_backend",
+  "name": "actividad9",
   "version": "1.0.0",
-  "description": "",
+  "description": "API REST proyecto tipo blog",
   "main": "index.js",
   "scripts": {
-    "start": "npm index.js",
-    "dev": "nodemon index.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node index.js",
+    "dev": "nodemon index.js"
   },
   "keywords": [],
   "author": "Jordi Saludes Cano",
   "license": "ISC",
   "dependencies": {
+    "cors": "^2.8.5",
     "dotenv": "^16.3.1",
-    "express": "^4.18.2"
+    "express": "^4.18.2",
+    "mysql2": "^3.6.2"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.1"
   }
 }
