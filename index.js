@@ -1,7 +1,14 @@
 const express = require('express');
 
-const logopedasBack = express();
+require('dotenv').config();
 
-logopedasBack.listen(3000, () => {
-    console.log('Servidor escuchando en puerto 3000');
- });
+const appback = express();
+
+// GET http://localhost:3000/api/users
+appback.get('/api/users', (req, res) => {
+  res.end('Devuelvo todos los usuarios');
+});
+
+appback.listen(process.env.PORT, () => {
+  console.log(`Servidor escuchando en puerto ${process.env.DB_PORT}`);
+});
