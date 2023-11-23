@@ -1,2 +1,1 @@
-# actividad9
-# proyecto tipo blog
+# App backend aplicación logopedas
