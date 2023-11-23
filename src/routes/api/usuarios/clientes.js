@@ -1,6 +1,6 @@
 const router = require('express').Router();
 
-const ClientesController = require('../../controllers/clientes.controller');
+const ClientesController = require('../../../controllers/clientes.controller');
 
 /* 			
             GET / (sólo para admins)

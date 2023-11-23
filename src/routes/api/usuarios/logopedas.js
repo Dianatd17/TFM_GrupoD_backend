@@ -1,6 +1,6 @@
 const router = require('express').Router();
 
-const LogopedasController = require('../../controllers/logopedas.controller');
+const LogopedasController = require('../../../controllers/logopedas.controller');
 
 /*
 			GET / (getAll. si es admin, muestra los que no están verificados también. si no, sólo los verificados)

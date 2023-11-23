@@ -1,6 +1,6 @@
 const router = require('express').Router();
 
-const AdminsController = require('../../controllers/admins.controller');
+const AdminsController = require('../../../controllers/admins.controller');
 
 /* 			
             PUT /verificar/:logopedaid (si es admin)

@@ -1,3 +1,4 @@
+// Creo y configuro la aplicación de Express
 const express = require('express');
 const cors = require('cors');
 

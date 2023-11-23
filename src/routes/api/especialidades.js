@@ -1,6 +1,6 @@
 const router = require('express').Router();
 
-const EspecialidadesController = require('../../controllers/especialidades.controller');
+const EspecialidadesController = require('../../../controllers/especialidades.controller');
 
 /* 			
         GET /
