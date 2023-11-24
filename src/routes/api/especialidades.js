@@ -1,15 +1,13 @@
 const router = require('express').Router();
 
-const EspecialidadesController = require('../../../controllers/especialidades.controller');
+const EspecialidadesController = require('../../controllers/especialidades.controller');
 
-/* 			
-        GET /
-		GET /:id
-		GET /infancia (es_infancia = 1)
-		GET /adultos (es_infancia = 0)
-		POST /logopeda/:idespec (crea relación con usuario del id del token con especialidad, si es logopeda)
-		PUT /logopeda/:idespec
-		DELETE /logopeda/:idespec
-*/
+router.get('/', (req, res) => {});
+router.get('/:id', (req, res) => {});
+router.get('/infancia', (req, res) => {}); // (es_infancia = 1)
+router.get('/adultos', (req, res) => {}); // (es_infancia = 0)
+router.post('/logopeda/:idespecialidad', (req, res) => {}); // (crea relación con usuario del id del token con especialidad, si es logopeda)
+router.put('/logopeda/:idespecialidad', (req, res) => {});
+router.delete('/logopeda/:idespecialidad', (req, res) => {});
 
 module.exports = router;

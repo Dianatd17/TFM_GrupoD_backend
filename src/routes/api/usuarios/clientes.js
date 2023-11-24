@@ -2,10 +2,8 @@ const router = require('express').Router();
 
 const ClientesController = require('../../../controllers/clientes.controller');
 
-/* 			
-            GET / (sólo para admins)
-			GET /:id (versión con los campos necesarios para mostrar a logopedas/admins)
-			GET /bylogopeda/:idlogopeda (todos los clientes de ese logopeda)
-*/
+router.get('/clientes', (req, res) => {}); // Solo para admins
+router.get('/clientes/:id', (req, res) => {}); // (versión con los campos necesarios para mostrar a logopedas/admins)
+router.get('/clientes/bylogopeda/:idlogopeda', (req, res) => {}); // (todos los clientes de ese logopeda)
 
 module.exports = router;

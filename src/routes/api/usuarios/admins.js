@@ -2,9 +2,7 @@ const router = require('express').Router();
 
 const AdminsController = require('../../../controllers/admins.controller');
 
-/* 			
-            PUT /verificar/:logopedaid (si es admin)
-			PUT /delete/:clienteid (si es admin)
-*/
+router.put('/verificar/:idlogopeda', (req, res) => {}); // (si es admin)
+router.put('/verificar/:idcliente', (req, res) => {}); // (si es admin)
 
 module.exports = router;
