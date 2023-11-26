@@ -1,4 +1,19 @@
 const AdminsModel = require('../models/admins.model');
 
+const putVerificarIdlogopeda = async (req, res) => {
+  try {
+    res.send('(si es admin)');
+  } catch (error) {
+    res.json({ Error: error.message });
+  }
+};
 
-module.exports = {  };
+const putVerificarIdcliente = async (req, res) => {
+  try {
+    res.send('(si es admin)');
+  } catch (error) {
+    res.json({ Error: error.message });
+  }
+};
+
+module.exports = { putVerificarIdlogopeda, putVerificarIdcliente };

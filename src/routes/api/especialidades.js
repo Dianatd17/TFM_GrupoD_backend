@@ -2,12 +2,21 @@ const router = require('express').Router();
 
 const EspecialidadesController = require('../../controllers/especialidades.controller');
 
-router.get('/', (req, res) => {});
-router.get('/:id', (req, res) => {});
-router.get('/infancia', (req, res) => {}); // (es_infancia = 1)
-router.get('/adultos', (req, res) => {}); // (es_infancia = 0)
-router.post('/logopeda/:idespecialidad', (req, res) => {}); // (crea relación con usuario del id del token con especialidad, si es logopeda)
-router.put('/logopeda/:idespecialidad', (req, res) => {});
-router.delete('/logopeda/:idespecialidad', (req, res) => {});
+router.get('/', EspecialidadesController.getEspecialidades);
+router.get('/:id', EspecialidadesController.getEspecialidadesById);
+router.get('/infancia', EspecialidadesController.getEspecialidadesInfancia); // (es_infancia = 1)
+router.get('/adultos', EspecialidadesController.getEspecialidadesAdultos); // (es_infancia = 0)
+router.post(
+  '/logopeda/:idespecialidad',
+  EspecialidadesController.relateLogopedaEspecialidad
+); // (crea relación con usuario del id del token con especialidad, si es logopeda)
+router.put(
+  '/logopeda/:idespecialidad',
+  EspecialidadesController.putLogopedaIdespecialidad
+);
+router.delete(
+  '/logopeda/:idespecialidad',
+  EspecialidadesController.deleteLogopegaIdespecialidad
+);
 
 module.exports = router;
