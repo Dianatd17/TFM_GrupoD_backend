@@ -1,4 +1,14 @@
-const UsuariosModel = require('../models/usuarios.model');
+const UsuarioModel = require('../models/usuario.model');
+
+const getAllUsuarios = async (req, res) => {
+  // Petición de prueba
+  try {
+    const [result] = await UsuarioModel.selectAllUsuarios();
+    res.json(result);
+  } catch (error) {
+    res.json({ Error: error.message });
+  }
+};
 
 const getUserById = async (req, res) => {
   try {
@@ -32,4 +42,10 @@ const loginUser = async (req, res) => {
   }
 };
 
-module.exports = { getUserById, editUserById, registerUser, loginUser };
+module.exports = {
+  getAllUsuarios,
+  getUserById,
+  editUserById,
+  registerUser,
+  loginUser,
+};

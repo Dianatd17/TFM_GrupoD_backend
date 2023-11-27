@@ -1,4 +1,4 @@
-const AdminsModel = require('../models/admins.model');
+const AdminModel = require('../models/admin.model');
 
 const putVerificarIdlogopeda = async (req, res) => {
   try {

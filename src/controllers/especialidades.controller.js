@@ -1,4 +1,4 @@
-const EspecialidadesModel = require('../models/especialidades.model');
+const EspecialidadModel = require('../models/especialidad.model');
 
 const getEspecialidades = async (req, res) => {
   try {

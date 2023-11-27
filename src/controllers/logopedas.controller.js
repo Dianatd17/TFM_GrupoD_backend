@@ -1,4 +1,4 @@
-const LogopedasModel = require('../models/logopedas.model');
+const LogopedaModel = require('../models/logopeda.model');
 
 const getAllLogopedas = async (req, res) => {
   try {
