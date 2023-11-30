@@ -3,6 +3,8 @@ const LogopedaModel = require('../models/logopeda.model');
 const getAllLogopedas = async (req, res) => {
   try {
     res.send('Devolvemos los logopedas');
+    const [result] = await LogopedaModel.selectAllLogopedas();
+    res.json(result);
   } catch (error) {
     res.json({ Error: error.message });
   }
