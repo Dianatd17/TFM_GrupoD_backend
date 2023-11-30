@@ -3,9 +3,9 @@ const router = require('express').Router();
 const EspecialidadesController = require('../../controllers/especialidades.controller');
 
 router.get('/', EspecialidadesController.getEspecialidades);
-router.get('/:id', EspecialidadesController.getEspecialidadesById);
 router.get('/infancia', EspecialidadesController.getEspecialidadesInfancia); // (es_infancia = 1)
-router.get('/adultos', EspecialidadesController.getEspecialidadesAdultos); // (es_infancia = 0)
+router.get('/adulto', EspecialidadesController.getEspecialidadesAdultos); // (es_infancia = 0)
+router.get('/:id', EspecialidadesController.getEspecialidadesById);
 router.post(
   '/logopeda/:idespecialidad',
   EspecialidadesController.relateLogopedaEspecialidad
