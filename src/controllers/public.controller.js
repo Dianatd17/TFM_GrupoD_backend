@@ -2,8 +2,6 @@ const PublicModel = require('../models/public.model');
 
 const getByRating = async (req, res) => {
   try {
-    const [posts] = await PublicModel.getByHighestrated();
-
     const [result] = await PublicModel.getByRating();
     res.json(result);
   } catch (error) {
