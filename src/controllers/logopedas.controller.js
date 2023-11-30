@@ -1,26 +1,28 @@
 const LogopedaModel = require('../models/logopeda.model');
 
 const getAllLogopedas = async (req, res) => {
+  console.log("hi");
   try {
-    res.send('Devolvemos los logopedas');
     const [result] = await LogopedaModel.selectAllLogopedas();
     res.json(result);
   } catch (error) {
-    res.json({ Error: error.message });
+    res.json({ fatal: error.message });
   }
 };
 
 const getLogopedaById = async (req, res) => {
   try {
-    res.send('Devolvemos el logopeda cuyo id es recibido');
+    const { id } = req.params;
+    const [result] = await LogopedaModel.selectLogopedaById(id);
+    res.json(result[0]);
   } catch (error) {
-    res.json({ Error: error.message });
+    res.json({ fatal: error.message });
   }
 };
 
 const getInfancia = async (req, res) => {
   try {
-    res.send('Devolvemos los especializados en infancia');
+    // usamos selectLogopedaEdad('infancia')
   } catch (error) {
     res.json({ Error: error.message });
   }
@@ -28,17 +30,15 @@ const getInfancia = async (req, res) => {
 
 const getAdultos = async (req, res) => {
   try {
-    res.send('Devolvemos los especializados en adultos');
+    // usamos selectLogopedaEdad('adulto')
   } catch (error) {
     res.json({ Error: error.message });
   }
 };
 
-const getEspecialidadIdEspecialidad = async (req, res) => {
+const getByEspecialidadId = async (req, res) => {
   try {
-    res.send(
-      'todos los que tienen relación con id especialidad en especialidades_has_logopedas'
-    );
+    //devuelve todos los que tienen relación con id especialidad en especialidades_has_logopedas
   } catch (error) {
     res.json({ Error: error.message });
   }
@@ -46,7 +46,7 @@ const getEspecialidadIdEspecialidad = async (req, res) => {
 
 const postConectarLogopeda = async (req, res) => {
   try {
-    res.send('crea relación del id del token con logopeda, si es el cliente');
+    // crea relación del id del token con logopeda, si es el cliente
   } catch (error) {
     res.json({ Error: error.message });
   }
@@ -54,9 +54,7 @@ const postConectarLogopeda = async (req, res) => {
 
 const putConectarIdCliente = async (req, res) => {
   try {
-    res.send(
-      'cambia status del id del token con el cliente, si es el logopeda'
-    );
+    //cambia status del id del token con el cliente, si es el logopeda
   } catch (error) {
     res.json({ Error: error.message });
   }
@@ -66,7 +64,7 @@ module.exports = {
   getLogopedaById,
   getInfancia,
   getAdultos,
-  getEspecialidadIdEspecialidad,
+  getByEspecialidadId,
   postConectarLogopeda,
   putConectarIdCliente,
 };

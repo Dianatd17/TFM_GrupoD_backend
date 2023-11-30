@@ -5,9 +5,6 @@ const UsuariosController = require('../../controllers/usuarios.controller');
 // /usuarios/
 router.get('/', UsuariosController.getAllUsuarios); // GET /:id (para el mismo usuario conectado. todos los campos. si rol (en el token) = logopeda habrá que hacer join con tabla logopeda_datos)
 
-router.get('/:id', UsuariosController.getUserById); // GET /:id (para el mismo usuario conectado. todos los campos. si rol (en el token) = logopeda habrá que hacer join con tabla logopeda_datos)
-router.put('/:id', UsuariosController.editUserById); // PUT /:id (si rol = logopeda habrá que editar logopeda_datos también)
-
 router.post('/email', UsuariosController.getUserByEmail); // devuelve el usuario con ese email. es POST en vez de GET por problemas pasando emails por la ruta
 
 // /usuarios/register
@@ -24,5 +21,8 @@ router.use('/clientes', require('./usuarios/clientes'));
 
 // /usuarios/admins
 router.use('/admins', require('./usuarios/admins'));
+
+router.get('/:id', UsuariosController.getUserById); // GET /:id (para el mismo usuario conectado. todos los campos. si rol (en el token) = logopeda habrá que hacer join con tabla logopeda_datos)
+router.put('/:id', UsuariosController.editUserById); // PUT /:id (si rol = logopeda habrá que editar logopeda_datos también)
 
 module.exports = router;

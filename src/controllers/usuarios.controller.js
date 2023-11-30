@@ -1,9 +1,8 @@
 const UsuarioModel = require('../models/usuario.model');
 const bcrypt = require('bcryptjs');
-const { createToken} = require('../helpers/utils');
+const { createToken } = require('../helpers/utils');
 
 const getAllUsuarios = async (req, res) => {
-  // Petición de prueba
   try {
     const [result] = await UsuarioModel.selectAllUsuarios();
     res.json(result);

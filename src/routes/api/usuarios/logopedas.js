@@ -8,7 +8,7 @@ router.get('/infancia', LogopedasController.getInfancia); // (si infancia_o_adul
 router.get('/adultos', LogopedasController.getAdultos); // (idem pero con adultos o ambos)
 router.get(
   '/especialidad/:idespecialidad',
-  LogopedasController.getEspecialidadIdEspecialidad
+  LogopedasController.getByEspecialidadId
 ); // (todos los que tienen relación con id especialidad en especialidades_has_logopedas)
 router.post('/conectar/:idlogopeda', LogopedasController.postConectarLogopeda); // (crea relación del id del token con logopeda, si es el cliente)
 router.put('/conectar/:idcliente', LogopedasController.putConectarIdCliente); // (cambia status del id del token con el cliente, si es el logopeda)

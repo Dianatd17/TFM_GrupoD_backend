@@ -2,33 +2,38 @@ const EspecialidadModel = require('../models/especialidad.model');
 
 const getEspecialidades = async (req, res) => {
   try {
-    res.send('Respuesta get especialidades');
+    const [result] = await EspecialidadModel.selectAllEspecialidades();
+    res.json(result);
   } catch (error) {
-    res.json({ Error: error.message });
+    res.json({ fatal: error.message });
   }
 };
 
 const getEspecialidadesById = async (req, res) => {
   try {
-    res.send('Respuesta get especialidades por id');
+    const { id } = req.params;
+    const [especialidades] = await EspecialidadModel.selectEspecialidad(id);
+    res.json(especialidades[0]);
   } catch (error) {
-    res.json({ Error: error.message });
+    res.json({ fatal: error.message });
   }
 };
 
 const getEspecialidadesInfancia = async (req, res) => {
   try {
-    res.send('Respuesta get especialidades infancia');
+    const [result] = await EspecialidadModel.selectEspecialidadesInfancia();
+    res.json(result);
   } catch (error) {
-    res.json({ Error: error.message });
+    res.json({ fatal: error.message });
   }
 };
 
 const getEspecialidadesAdultos = async (req, res) => {
   try {
-    res.send('Respuesta get especialidades adultos');
+    const [result] = await EspecialidadModel.selectEspecialidadesAdulto();
+    res.json(result);
   } catch (error) {
-    res.json({ Error: error.message });
+    res.json({ fatal: error.message });
   }
 };
 
@@ -36,7 +41,7 @@ const relateLogopedaEspecialidad = async (req, res) => {
   try {
     res.send('Respuesta de relacionar logopeda con especialidad');
   } catch (error) {
-    res.json({ Error: error.message });
+    res.json({ fatal: error.message });
   }
 };
 
@@ -44,7 +49,7 @@ const putLogopedaIdespecialidad = async (req, res) => {
   try {
     res.send('Respuesta put /logopeda/:idespecialidad');
   } catch (error) {
-    res.json({ Error: error.message });
+    res.json({ fatal: error.message });
   }
 };
 
@@ -52,7 +57,7 @@ const deleteLogopegaIdespecialidad = async (req, res) => {
   try {
     res.send('Respuesta delete /logopeda/:idespecialidad');
   } catch (error) {
-    res.json({ Error: error.message });
+    res.json({ fatal: error.message });
   }
 };
 
