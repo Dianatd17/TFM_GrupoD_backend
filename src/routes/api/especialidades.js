@@ -9,11 +9,7 @@ router.get('/:id', EspecialidadesController.getEspecialidadesById);
 router.post(
   '/logopeda/:idespecialidad',
   EspecialidadesController.relateLogopedaEspecialidad
-); // (crea relación con usuario del id del token con especialidad, si es logopeda)
-router.put(
-  '/logopeda/:idespecialidad',
-  EspecialidadesController.putLogopedaIdespecialidad
-);
+); // (crea relación con usuario del id (user_id en el body) del token con especialidad, si es logopeda)
 router.delete(
   '/logopeda/:idespecialidad',
   EspecialidadesController.deleteLogopegaIdespecialidad

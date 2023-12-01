@@ -1,4 +1,5 @@
 const EspecialidadModel = require('../models/especialidad.model');
+const UsuarioModel = require('../models/usuario.model');
 
 const getEspecialidades = async (req, res) => {
   try {
@@ -39,15 +40,14 @@ const getEspecialidadesAdultos = async (req, res) => {
 
 const relateLogopedaEspecialidad = async (req, res) => {
   try {
-    res.send('Respuesta de relacionar logopeda con especialidad');
-  } catch (error) {
-    res.json({ fatal: error.message });
-  }
-};
-
-const putLogopedaIdespecialidad = async (req, res) => {
-  try {
-    res.send('Respuesta put /logopeda/:idespecialidad');
+    const { idespecialidad } = req.params;
+    const idlogopeda = req.body.user_id;
+    const [logopedas] = await UsuarioModel.selectUsuarioById(idlogopeda);
+    if (logopedas[0].rol === 'logopeda') {
+      const [result] = await EspecialidadModel.insertEspecialidadToLogopeda(idespecialidad, idlogopeda);
+      res.json(result);
+    }
+    return res.json({ fatal: 'El usuario debe ser un logopeda' });
   } catch (error) {
     res.json({ fatal: error.message });
   }
@@ -55,7 +55,10 @@ const putLogopedaIdespecialidad = async (req, res) => {
 
 const deleteLogopegaIdespecialidad = async (req, res) => {
   try {
-    res.send('Respuesta delete /logopeda/:idespecialidad');
+    const { idespecialidad } = req.params;
+    const idlogopeda = req.body.user_id;
+    const [result] = await EspecialidadModel.deleteEspecialidadLogopeda(idespecialidad, idlogopeda);
+    res.json(result);
   } catch (error) {
     res.json({ fatal: error.message });
   }
@@ -67,6 +70,5 @@ module.exports = {
   getEspecialidadesInfancia,
   getEspecialidadesAdultos,
   relateLogopedaEspecialidad,
-  putLogopedaIdespecialidad,
   deleteLogopegaIdespecialidad,
 };
