@@ -1,12 +1,16 @@
 const LogopedaModel = require('../models/logopeda.model');
+const selectAllEspecialidades = require('../models/especialidad.model'); 
 
 const getAllLogopedas = async (req, res) => {
-  console.log("hi");
   try {
     const [result] = await LogopedaModel.selectAllLogopedas();
-    res.json(result);
+    if(result){
+      res.status(200).json(result);
+    }else{
+      res.status(204).json({msg : `no hay resultados en tu busqueda`})
+    }
   } catch (error) {
-    res.json({ fatal: error.message });
+    res.status(500).json({ fatal: error.message });
   }
 };
 
@@ -14,35 +18,60 @@ const getLogopedaById = async (req, res) => {
   try {
     const { id } = req.params;
     const [result] = await LogopedaModel.selectLogopedaById(id);
-    res.json(result[0]);
+    if(result){
+      res.status(200).json(result[0])
+    }else{
+      res.status(204).json({msg : ` no hay resultados `})
+    }
   } catch (error) {
-    res.json({ fatal: error.message });
+    res.status(500).json({ fatal: error.message });
   }
 };
 
+// usamos selectLogopedaEdad('infancia')
 const getInfancia = async (req, res) => {
   try {
-    // usamos selectLogopedaEdad('infancia')
+    const result = await LogopedaModel.selectLogopedasByEdad('infancia');
+     if(result){
+     res.status(200).json(result[0]);
+     }else{
+      res.status(204).json({msg:  `no hay resultados en tu busquedas`})
+     }
   } catch (error) {
-    res.json({ Error: error.message });
+    res.status(500).json({ Error: error.message });
   }
 };
 
+// usamos selectLogopedaEdad('adulto')
 const getAdultos = async (req, res) => {
   try {
-    // usamos selectLogopedaEdad('adulto')
+    const result = await LogopedaModel.selectLogopedasByEdad('adulto')
+    if(result){
+      res.status(200).json(result[0]);
+    }else{
+      res.status(204).json({msg : 'no hay resultados '
+      })
+    } 
   } catch (error) {
-    res.json({ Error: error.message });
+    res.status(500).json({ Error: error.message });
   }
 };
 
+ //devuelve todos los que tienen relación con id especialidad en especialidades_has_logopedas
 const getByEspecialidadId = async (req, res) => {
   try {
-    //devuelve todos los que tienen relación con id especialidad en especialidades_has_logopedas
+    const idSpecialidad = req.params.idespecialidad;
+    const result = await LogopedaModel.selectLogopedasByEspecialidad(idSpecialidad);
+    if(result){
+      res.status(200).json(result[0]);
+    }else{
+      res.status(204).json({msg: `no hay resultados`});
+    }
   } catch (error) {
-    res.json({ Error: error.message });
+    res.status(500).json({ Error: error.message });
   }
 };
+
 
 const postConectarLogopeda = async (req, res) => {
   try {
@@ -59,6 +88,7 @@ const putConectarIdCliente = async (req, res) => {
     res.json({ Error: error.message });
   }
 };
+
 module.exports = {
   getAllLogopedas,
   getLogopedaById,
