@@ -18,7 +18,9 @@ const getClienteById = async (req, res) => {
 
 const getClientesByLogopeda = async (req, res) => {
   try {
-    res.send('Devolvemos los clientes del logopeda cuyo id es recibido');
+    const {idCliente} = req.params
+    const [result] = await ClienteModel.selectLogopedaByClientes(idCliente);
+    res.send(result);
   } catch (error) {
     res.json({ Error: error.message });
   }
