@@ -9,4 +9,6 @@ router.get(
   ClientesController.getClientesByLogopeda
 ); // (todos los clientes de ese logopeda)
 
+/* HACER UN GET LOGOPEDAS BY CLIENTES */
+
 module.exports = router;
