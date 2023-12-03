@@ -72,6 +72,16 @@ const getByEspecialidadId = async (req, res) => {
   }
 };
 
+const getClientesByLogopedas = async (req,res) =>{
+  try{
+    const { idLogopeda } = req.params
+    const [result] = await LogopedaModel.selectClientesByLogopedas(idLogopeda)
+    res.json(result)
+  }catch(error){
+    res.status(500).json({Error: error.message})
+  }
+}
+
 
 const postConectarLogopeda = async (req, res) => {
   try {
@@ -97,4 +107,5 @@ module.exports = {
   getByEspecialidadId,
   postConectarLogopeda,
   putConectarIdCliente,
+  getClientesByLogopedas
 };

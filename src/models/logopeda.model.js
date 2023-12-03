@@ -17,6 +17,12 @@ const selectLogopedasByEspecialidad = (idespecialidad) => {
     return db.query (`${query_start} and u.id in (select logopeda_id as id from especialidades_has_logopedas where especialidad_id = ?) ${query_end}`, [idespecialidad]);
 }
 
+const selectClientesByLogopedas = (idLogopeda) =>{
+    return db.query(`SELECT l.logopeda_id, l.cliente_id, u.nombre, u.apellidos, u.imagen, l.fecha_inicio, l.status
+    FROM logopedas.logopedas_has_clientes l, logopedas.usuarios u
+    WHERE l.cliente_id = u.id AND l.logopeda_id = ?;`,[idLogopeda])
+}
+
 const insertConnection = (cliente_id, logopeda_id) => {
     return db.query ('INSERT INTO logopedas_has_clientes (logopeda_id, cliente_id, status) VALUES (?,?,?)', 
     [logopeda_id, cliente_id, 'pendiente']);
@@ -33,5 +39,6 @@ module.exports = {
     selectLogopedasByEdad, 
     selectLogopedasByEspecialidad,
     insertConnection,
-    updateConnection
+    updateConnection,
+    selectClientesByLogopedas
 }

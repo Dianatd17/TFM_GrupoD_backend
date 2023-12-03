@@ -10,4 +10,7 @@ router.get('/:id', LogopedasController.getLogopedaById); // (versión con los ca
 router.post('/conectar', LogopedasController.postConectarLogopeda); // (crea relación del id del token con logopeda, si es el cliente)
 router.put('/conectar', LogopedasController.putConectarIdCliente); // (cambia status del id del token con el cliente, si es el logopeda)
 
+/* GET QUE DEVUELVE LOS CLIENTES DEL LOGOPEDA */
+router.get('/clientes/:idLogopeda', LogopedasController.getClientesByLogopedas )
+
 module.exports = router;
