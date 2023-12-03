@@ -50,7 +50,7 @@ const registerUser = async (req, res) => {
     const [result] = await UsuarioModel.insertUsuario({
       nombre: req.body.nombre, apellidos: req.body.apellidos, email: req.body.email, 
       password: req.body.password, rol: req.body.rol, direccion: req.body.direccion, 
-      localidad: req.body.localidad, provincia: req.body.provincia
+      localidad: req.body.localidad, provincia: req.body.provincia, status: req.body.status
     });
     if (req.body.rol === 'logopeda') {
       const [result2] = await UsuarioModel.insertDatosLogopeda(

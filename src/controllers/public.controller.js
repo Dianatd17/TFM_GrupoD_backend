@@ -2,18 +2,24 @@ const PublicModel = require('../models/public.model');
 
 const getByRating = async (req, res) => {
   try {
-    res.send('Aquí devolveremos los usuarios por rating');
+    const [result] = await PublicModel.getByRating();
+    res.json(result);
   } catch (error) {
-    res.json({ Error: error.message });
+    res.json({ fatal: error.message });
   }
+
 };
+
 
 const getByLocation = async (req, res) => {
   try {
-    res.send('Aquí devolveremos los usuarios por ubicación');
+    const [result] = await PublicModel.getByRating();
+    res.json(result);
   } catch (error) {
-    res.json({ Error: error.message });
+    res.json({ fatal: error.message });
   }
+
 };
+
 
 module.exports = { getByRating, getByLocation };

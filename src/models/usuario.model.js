@@ -10,9 +10,9 @@ const selectUsuarioByEmail = (email) => {
   return db.query('select * from usuarios where email = ?', [email])
 }
 
-const insertUsuario = ({nombre, apellidos, email, password, rol, direccion, localidad, provincia}) => {
-  return db.query('insert into usuarios (nombre, apellidos, email, password, rol, direccion, localidad, provincia) values (?, ?, ?, ?, ?, ?, ?, ?)',
-  [nombre, apellidos, email, password, rol, direccion, localidad, provincia]
+const insertUsuario = ({nombre, apellidos, email, password, rol, direccion, localidad, provincia, status}) => {
+  return db.query('insert into usuarios (nombre, apellidos, email, password, rol, direccion, localidad, provincia, status) values (?, ?, ?, ?, ?, ?, ?, ?, ?)',
+  [nombre, apellidos, email, password, rol, direccion, localidad, provincia, status]
   );
 }
 
