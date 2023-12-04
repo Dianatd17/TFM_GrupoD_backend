@@ -23,6 +23,7 @@ router.use('/clientes', require('./usuarios/clientes'));
 router.use('/admins', require('./usuarios/admins'));
 
 router.get('/:id', UsuariosController.getUserById); // GET /:id (para el mismo usuario conectado. todos los campos. si rol (en el token) = logopeda habrá que hacer join con tabla logopeda_datos)
+
 router.put('/:id', UsuariosController.editUserById); // PUT /:id (si rol = logopeda habrá que editar logopeda_datos también)
 
 module.exports = router;
