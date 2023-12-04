@@ -1,5 +1,5 @@
 const router = require('express').Router();
-
+const { checkEmail } = require('../../middlewares/usuarios.middleware');
 const UsuariosController = require('../../controllers/usuarios.controller');
 
 // /usuarios/
@@ -8,7 +8,7 @@ router.get('/', UsuariosController.getAllUsuarios); // GET /:id (para el mismo u
 router.post('/email', UsuariosController.getUserByEmail); // devuelve el usuario con ese email. es POST en vez de GET por problemas pasando emails por la ruta
 
 // /usuarios/register
-router.post('/register', UsuariosController.registerUser); // (si rol = logopeda habrá que crearlo primero en tabla usuario y con el id creado crear el resto en logopeda_datos)
+router.post('/register', checkEmail, UsuariosController.registerUser); // (si rol = logopeda habrá que crearlo primero en tabla usuario y con el id creado crear el resto en logopeda_datos)
 
 // /usuarios/login
 router.post('/login', UsuariosController.loginUser);

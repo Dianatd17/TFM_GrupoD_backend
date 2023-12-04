@@ -40,12 +40,6 @@ const editUserById = async (req, res) => {
 
 const registerUser = async (req, res) => {
   try {
-    const { email } = req.body;
-    // ¿Existe el email en la base de datos?
-    const emailcheck = await UsuarioModel.selectUsuarioByEmail(email);
-    if (emailcheck[0].length > 0) {
-        return res.json({ fatal: 'Ya existe cuenta para esa dirección de email' });
-    }
     req.body.password = bcrypt.hashSync(req.body.password, 8);
     const [result] = await UsuarioModel.insertUsuario({
       nombre: req.body.nombre, apellidos: req.body.apellidos, email: req.body.email, 
