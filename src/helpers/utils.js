@@ -7,7 +7,6 @@ const createToken = (user) => {
         user_role: user.rol,
         exp_at: dayjs().add(7, 'days').unix()
     }
-    console.log(user);
     return jsonwebtoken.sign(payload, process.env.SECRET_KEY);
 }
 
