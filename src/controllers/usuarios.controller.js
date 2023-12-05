@@ -32,7 +32,25 @@ const getUserByEmail = async (req, res) => {
 
 const editUserById = async (req, res) => {
   try {
-    res.send('Editamos el usuario cuyo id es recibido');
+    // TODO: revisar con middle que el id en token es el mismo que en el body, o si es rol admin
+    const [result] = await UsuarioModel.updateUsuario({ id: req.body.id,
+      nombre: req.body.nombre, apellidos: req.body.apellidos, email: req.body.email, 
+      direccion: req.body.direccion, localidad: req.body.localidad, provincia: req.body.provincia
+    });
+    if (req.body.rol === 'logopeda') {
+      const [result2] = await UsuarioModel.updatetDatosLogopeda({
+        usuario_id: req.body.id, telefono: req.body.telefono, precio: req.body.precio, 
+        experiencia: req.body.experiencia, descripcion: req.body.descripcion, 
+        infancia_o_adulto: req.body.infancia_o_adulto
+      });
+    }
+    if (req.body.password !== '') {
+      req.body.password = bcrypt.hashSync(req.body.password, 8);
+      const [respass] = await UsuarioModel.updatePassword(req.body.id, req.body.password);
+    }
+    // TODO: falta añadir la parte de imagen
+    const [usuario] = await UsuarioModel.selectUsuarioById(req.body.id);
+    res.json(usuario[0]);
   } catch (error) {
     res.json({ Error: error.message });
   }
