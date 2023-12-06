@@ -43,7 +43,7 @@ const updatePassword = (id, password) => {
 module.exports = { 
   selectAllUsuarios, 
   selectUsuarioById, 
-  selectUsuarioByEmail, 
+  selectUsuarioByEmail,
   insertUsuario, 
   insertDatosLogopeda,
   updateUsuario,
