@@ -1,6 +1,7 @@
 const query_start = "select u.id, u.nombre, u.apellidos, u.email, d.telefono, u.longitud, u.latitud, u.direccion, u.localidad, u.provincia, u.imagen, d.precio, d.experiencia, d.descripcion, d.infancia_o_adulto, AVG(h.puntuacion) as puntuacion from usuarios u left join logopeda_datos d on u.id = d.usuario_id left join logopedas_has_clientes h on u.id = h.logopeda_id where u.rol = 'logopeda' and u.status = 1";
 const query_end = "group by u.id, u.nombre, u.apellidos, u.email, d.telefono, u.longitud, u.latitud, u.direccion, u.localidad, u.provincia, u.imagen, d.precio, d.experiencia, d.descripcion, d.infancia_o_adulto";
 
+
 const selectAllLogopedas = () => {
     return db.query(`${query_start} ${query_end}`);
 }
@@ -14,24 +15,38 @@ const selectLogopedasByEdad = (edad) => {
 }
 
 const selectLogopedasByEspecialidad = (idespecialidad) => {
-    return db.query (`${query_start} and u.id in (select logopeda_id as id from especialidades_has_logopedas where especialidad_id = ?) ${query_end}`, [idespecialidad]);
+    return db.query(`${query_start} and u.id in (select logopeda_id as id from especialidades_has_logopedas where especialidad_id = ?) ${query_end}`, [idespecialidad]);
 }
 
-const insertConnection = (cliente_id, logopeda_id) => {
-    return db.query ('INSERT INTO logopedas_has_clientes (logopeda_id, cliente_id, status) VALUES (?,?,?)', 
-    [logopeda_id, cliente_id, 'pendiente']);
+
+const selectClientesByLogopedas = (idLogopeda) =>{
+    return db.query(`SELECT l.logopeda_id, l.cliente_id, u.nombre, u.apellidos, u.imagen, l.fecha_inicio,u.rol,u.status as estado_u, l.status
+    FROM logopedas.logopedas_has_clientes l, logopedas.usuarios u
+    WHERE l.cliente_id = u.id AND l.logopeda_id = ?;`,[idLogopeda])
 }
 
-const updateConnection = (cliente_id, logopeda_id, status, fecha) => {
-    return db.query ('UPDATE logopedas_has_clientes SET status = ?, fecha_inicio = ? WHERE cliente_id = ? and logopeda_id = ?)', 
-    [status, fecha, cliente_id, logopeda_id]);
+
+//Se busca en la tabla Logopeda_Has_Clientes si ya existe un registro entre el cliente y el logopeda activo
+const selectConnectionLogopedasHasClientes = (logopeda_id, cliente_id) => {
+    return db.query("SELECT count(*)as cnt FROM  logopedas_has_clientes  WHERE logopeda_id=? and cliente_id =? and fecha_fin is null", [logopeda_id, cliente_id]);
+}
+const insertConnection = ({ logopeda_id, cliente_id, comentarios, puntuacion, fecha_inicio }) => {
+    return db.query('INSERT INTO logopedas_has_clientes (logopeda_id, cliente_id,comentarios,puntuacion, fecha_inicio) VALUES (?,?,?,?,?)',
+        [logopeda_id, cliente_id, comentarios, puntuacion, fecha_inicio]);
 }
 
-module.exports = { 
-    selectAllLogopedas, 
-    selectLogopedaById, 
-    selectLogopedasByEdad, 
+const updateConnection = (id, { comentarios, puntuacion, fecha_fin, status }) => {
+    return db.query('UPDATE logopedas_has_clientes SET comentarios = ?,puntuacion = ?, fecha_fin = ? , status = ?  WHERE id = ? ',
+        [comentarios, puntuacion, fecha_fin, status, id]);
+}
+
+module.exports = {
+    selectAllLogopedas,
+    selectLogopedaById,
+    selectLogopedasByEdad,
     selectLogopedasByEspecialidad,
+    selectConnectionLogopedasHasClientes,
     insertConnection,
-    updateConnection
+    updateConnection,
+    selectClientesByLogopedas
 }
