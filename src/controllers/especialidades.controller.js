@@ -38,37 +38,53 @@ const getEspecialidadesAdultos = async (req, res) => {
   }
 };
 
+const getEspecialidadesByLogopedaId = async (req, res) => {
+  try {
+    const { logopedaId } = req.params;
+    const [result] = await EspecialidadModel.selectEspecialidadesByLogopeda(logopedaId);
+    res.json(result);
+  } catch (error) {
+    res.json({ Error: error.message });
+  }
+}
+
 const relateLogopedaEspecialidad = async (req, res) => {
   try {
     const { idespecialidad } = req.params;
-    const idlogopeda = req.body.user_id;
-    const [logopedas] = await UsuarioModel.selectUsuarioById(idlogopeda);
-    if (logopedas[0].rol === 'logopeda') {
-      const [result] = await EspecialidadModel.insertEspecialidadToLogopeda(idespecialidad, idlogopeda);
+    const [[user]] = req.user;
+    // TODO: hacer esta comprobación con un middleware
+    if (user.rol === 'logopeda') {
+      const [result] = await EspecialidadModel.insertEspecialidadToLogopeda(idespecialidad, user.id);
       res.json(result);
+    } else {
+      res.json({ fatal: 'El usuario debe ser un logopeda' });
     }
-    return res.json({ fatal: 'El usuario debe ser un logopeda' });
   } catch (error) {
     res.json({ fatal: error.message });
   }
-};
+}
 
 const deleteLogopegaIdespecialidad = async (req, res) => {
   try {
     const { idespecialidad } = req.params;
-    const idlogopeda = req.body.user_id;
-    const [result] = await EspecialidadModel.deleteEspecialidadLogopeda(idespecialidad, idlogopeda);
-    res.json(result);
+    const [[user]] = req.user;
+    if (user.rol === 'logopeda') {
+      const [result] = await EspecialidadModel.deleteEspecialidadLogopeda(idespecialidad, user.id);
+      res.json(result);
+    } else {
+      res.json({ fatal: 'El usuario debe ser un logopeda' });
+    }
   } catch (error) {
     res.json({ fatal: error.message });
   }
-};
+}
 
 module.exports = {
   getEspecialidades,
   getEspecialidadesById,
   getEspecialidadesInfancia,
   getEspecialidadesAdultos,
+  getEspecialidadesByLogopedaId,
   relateLogopedaEspecialidad,
   deleteLogopegaIdespecialidad,
 };

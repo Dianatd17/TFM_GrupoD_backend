@@ -14,6 +14,10 @@ const selectEspecialidadesAdulto = () => {
     return db.query('select * from especialidades where es_infancia in (0, 2)');
 }
 
+const selectEspecialidadesByLogopeda = (logopedaId) => {
+    return db.query('select * from especialidades where id in (select especialidad_id as id from especialidades_has_logopedas where logopeda_id=?) order by id', [logopedaId]);
+}
+
 const insertEspecialidadToLogopeda = (especialidadId, logopedaId) => {
     return db.query('insert into especialidades_has_logopedas (especialidad_id, logopeda_id) values (?, ?)',
     [especialidadId, logopedaId]);
@@ -29,6 +33,7 @@ module.exports = {
     selectEspecialidad,
     selectEspecialidadesInfancia,
     selectEspecialidadesAdulto,
+    selectEspecialidadesByLogopeda,
     insertEspecialidadToLogopeda,
     deleteEspecialidadLogopeda
 }

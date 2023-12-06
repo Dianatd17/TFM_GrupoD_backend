@@ -1,5 +1,4 @@
 const LogopedaModel = require('../models/logopeda.model');
-const selectAllEspecialidades = require('../models/especialidad.model');
 
 const getAllLogopedas = async (req, res) => {
   try {
@@ -82,8 +81,6 @@ const getClientesByLogopedas = async (req,res) =>{
     res.status(500).json({Error: error.message})
   }
 }
-
-
 
 const postConectarLogopeda = async (req, res) => {
   try {
