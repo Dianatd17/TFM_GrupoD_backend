@@ -20,7 +20,7 @@ const selectLogopedasByEspecialidad = (idespecialidad) => {
 
 
 const selectClientesByLogopedas = (idLogopeda) =>{
-    return db.query(`SELECT l.logopeda_id, l.cliente_id, u.nombre, u.apellidos, u.imagen, l.fecha_inicio,u.rol,u.status as estado_u, l.status
+    return db.query(`SELECT l.logopeda_id, l.cliente_id, u.nombre, u.apellidos, u.email, u.localidad,  u.imagen, l.fecha_inicio,u.rol,u.status as estado_u, l.status
     FROM logopedas.logopedas_has_clientes l, logopedas.usuarios u
     WHERE l.cliente_id = u.id AND l.logopeda_id = ?;`,[idLogopeda])
 }
