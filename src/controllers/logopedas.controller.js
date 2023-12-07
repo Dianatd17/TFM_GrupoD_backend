@@ -1,3 +1,4 @@
+const { json } = require('express');
 const LogopedaModel = require('../models/logopeda.model');
 
 const getAllLogopedas = async (req, res) => {
@@ -82,6 +83,16 @@ const getClientesByLogopedas = async (req,res) =>{
   }
 }
 
+const getClasById = async (req, res) =>{
+  try{
+    const {claseId} = req.params
+    const [result] = await LogopedaModel.selectclasById(claseId);
+    res.json(result[0])
+  }catch(error){
+    res.status(500).json({Error: error.message})
+  }
+}
+
 const postConectarLogopeda = async (req, res) => {
   try {
 
@@ -125,6 +136,21 @@ const putConectarLogopeda = async (req, res) => {
   }
 };
 
+const putStatusClases = async (req, res) =>{
+  try{
+    const {claseId} = req.params;
+    const [result] = await LogopedaModel.updateClase(claseId, req.body );
+    if(result){
+      res.status(200).json({Succes: 'Actualizacion correcta'})
+    }else{
+      res.status(204).json({msg: 'Ha ocurrido un error'})
+    }
+    
+  } catch(error){
+    res.status(500).json({Error: error.message})
+  }
+}
+
 module.exports = {
   getAllLogopedas,
   getLogopedaById,
@@ -133,5 +159,7 @@ module.exports = {
   getByEspecialidadId,
   postConectarLogopeda,
   getClientesByLogopedas,
-  putConectarLogopeda
+  putConectarLogopeda,
+  getClasById,
+  putStatusClases
 };

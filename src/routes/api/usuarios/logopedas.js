@@ -12,5 +12,6 @@ router.put('/conectar/:idConecta', LogopedasController.putConectarLogopeda); // 
 
 /* GET QUE DEVUELVE LOS CLIENTES DEL LOGOPEDA */
 router.get('/clientes/:idLogopeda', LogopedasController.getClientesByLogopedas )
-
+router.get('/clase/:claseId', LogopedasController.getClasById)
+router.put('/clase/:claseId', LogopedasController.putStatusClases)
 module.exports = router;

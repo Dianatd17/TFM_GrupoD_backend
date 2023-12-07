@@ -20,9 +20,13 @@ const selectLogopedasByEspecialidad = (idespecialidad) => {
 
 
 const selectClientesByLogopedas = (idLogopeda) =>{
-    return db.query(`SELECT l.logopeda_id, l.cliente_id, u.nombre, u.apellidos, u.email, u.localidad,  u.imagen, l.fecha_inicio,u.rol,u.status as estado_u, l.status
+    return db.query(`SELECT l.id ,l.logopeda_id, l.cliente_id, u.nombre, u.apellidos, u.email, u.localidad,  u.imagen, l.fecha_inicio,u.rol,u.status as estado_u, l.status
     FROM logopedas.logopedas_has_clientes l, logopedas.usuarios u
     WHERE l.cliente_id = u.id AND l.logopeda_id = ?;`,[idLogopeda])
+}
+
+const selectclasById = (id) =>{
+    return db.query(`Select * FROM logopedas.logopedas_has_clientes WHERE id = ?`,[id])
 }
 
 
@@ -40,6 +44,10 @@ const updateConnection = (id, { comentarios, puntuacion, fecha_fin, status }) =>
         [comentarios, puntuacion, fecha_fin, status, id]);
 }
 
+const updateClase = (claseId, {id, logopeda_id, cliente_id, comentarios, puntuacion, fecha_inicio, fecha_fin, status}) =>{
+    return db.query('UPDATE logopedas_has_clientes SET id = ?, logopeda_id = ?, cliente_id = ?, comentarios = ?, puntuacion = ?, fecha_inicio = ?,  fecha_fin = ?, status = ? WHERE id = ?' , [id, logopeda_id, cliente_id, comentarios, puntuacion, fecha_inicio, fecha_fin, status, claseId])
+}
+
 module.exports = {
     selectAllLogopedas,
     selectLogopedaById,
@@ -48,5 +56,7 @@ module.exports = {
     selectConnectionLogopedasHasClientes,
     insertConnection,
     updateConnection,
-    selectClientesByLogopedas
+    selectClientesByLogopedas,
+    selectclasById,
+    updateClase
 }
