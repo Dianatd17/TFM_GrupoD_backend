@@ -1,5 +1,6 @@
 const UsuarioModel = require('../models/usuario.model');
 const bcrypt = require('bcryptjs');
+const fs = require('fs');
 const { createToken } = require('../helpers/utils');
 
 const getAllUsuarios = async (req, res) => {
@@ -48,13 +49,44 @@ const editUserById = async (req, res) => {
       req.body.password = bcrypt.hashSync(req.body.password, 8);
       const [respass] = await UsuarioModel.updatePassword(req.body.id, req.body.password);
     }
-    // TODO: falta añadir la parte de imagen
     const [usuario] = await UsuarioModel.selectUsuarioById(req.body.id);
     res.json(usuario[0]);
   } catch (error) {
     res.json({ Error: error.message });
   }
 };
+
+const getImagen = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const [result] = await UsuarioModel.selectImagen(id);
+    imagen = result[0].imagen || '';
+    ruta = '';
+    if (imagen !== '' && imagen !== null) {
+      ruta = 'http://localhost:3000/img/';
+    }
+    res.json({ imagen: `${ruta}${imagen}` });
+  } catch (error) {
+    res.json({ error: error.message });
+  }
+}
+
+const editImagen = async (req, res) => {
+  try {
+    if (req.file) {
+      const [[user]] = req.user;
+      const [result] = await UsuarioModel.updateImagen(user.id, req.file.filename);
+      if(result && user.imagen !== null && user.image !== '') {
+        fs.unlinkSync(`uploads/${user.imagen}`);
+      }
+      res.json({ ruta: req.file.filename });
+    } else {
+      res.json({ fatal: "No hay imagen que subir" });
+    }
+  } catch (error) {
+    res.json({ Error: error.message });
+  }
+}
 
 const registerUser = async (req, res) => {
   try {
@@ -102,7 +134,9 @@ module.exports = {
   getAllUsuarios,
   getUserById,
   getUserByEmail,
+  getImagen,
   editUserById,
   registerUser,
   loginUser,
+  editImagen
 };

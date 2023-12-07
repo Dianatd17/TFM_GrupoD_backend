@@ -9,7 +9,11 @@ const selectUsuarioById = (usuarioId) => {
 };
 
 const selectUsuarioByEmail = (email) => {
-  return db.query(`${query_start} where email = ?`, [email])
+  return db.query(`${query_start} where email = ?`, [email]);
+}
+
+const selectImagen = (id) => {
+  return db.query('select imagen from usuarios where id = ?', [id]);
 }
 
 const insertUsuario = ({nombre, apellidos, email, password, rol, direccion, localidad, provincia, status}) => {
@@ -40,13 +44,19 @@ const updatePassword = (id, password) => {
   return db.query('update usuarios set password=? where id = ?', [password, id]);
 }
 
+const updateImagen = (id, path) => {
+  return db.query('update usuarios set imagen = ? where id = ?', [path, id]);
+}
+
 module.exports = { 
   selectAllUsuarios, 
   selectUsuarioById, 
   selectUsuarioByEmail,
+  selectImagen,
   insertUsuario, 
   insertDatosLogopeda,
   updateUsuario,
   updatetDatosLogopeda,
-  updatePassword
+  updatePassword,
+  updateImagen
 };
