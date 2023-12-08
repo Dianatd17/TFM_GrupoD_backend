@@ -5,7 +5,7 @@ const { checkEmail } = require('../../middlewares/usuarios.middleware');
 const { checkToken } = require('../../middlewares/auth.middleware');
 const UsuariosController = require('../../controllers/usuarios.controller');
 
-const storage = multer.diskStorage({
+/*const storage = multer.diskStorage({
     destination: function(req, file,cb){
         cb(null, 'uploads');
     },
@@ -16,7 +16,8 @@ const storage = multer.diskStorage({
  const upload =  multer({
     storage : storage,
     limits: {fileSize : 10 * 1024 *1024}
- });
+ });*/
+ const upload = multer({ dest: 'uploads/' });
 
 // /usuarios/
 router.get('/', UsuariosController.getAllUsuarios); // GET /:id (para el mismo usuario conectado. todos los campos. si rol (en el token) = logopeda habrá que hacer join con tabla logopeda_datos)
@@ -44,7 +45,7 @@ router.get('/imagen/:id', UsuariosController.getImagen)
 router.get('/:id', UsuariosController.getUserById); // GET /:id (para el mismo usuario conectado. todos los campos. si rol (en el token) = logopeda habrá que hacer join con tabla logopeda_datos)
 
 router.put('/', checkToken, UsuariosController.editUserById); // PUT (si rol = logopeda habrá que editar logopeda_datos también)
-router.post('/imagen', checkToken, upload.single("image"), UsuariosController.editImagen);
+router.post('/imagen', checkToken, upload.single("imagen"), UsuariosController.editImagen);
 
 
 module.exports = router;
