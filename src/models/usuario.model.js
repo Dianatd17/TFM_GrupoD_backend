@@ -16,9 +16,9 @@ const selectImagen = (id) => {
   return db.query('select imagen from usuarios where id = ?', [id]);
 }
 
-const insertUsuario = ({nombre, apellidos, email, password, rol, direccion, localidad, provincia, status}) => {
-  return db.query('insert into usuarios (nombre, apellidos, email, password, rol, direccion, localidad, provincia, status) values (?, ?, ?, ?, ?, ?, ?, ?, ?)',
-  [nombre, apellidos, email, password, rol, direccion, localidad, provincia, status]
+const insertUsuario = ({nombre, apellidos, email, password, rol, direccion, localidad, provincia, status, longitud, latitud}) => {
+  return db.query('insert into usuarios (nombre, apellidos, email, password, rol, direccion, localidad, provincia, status, longitud, latitud) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)',
+  [nombre, apellidos, email, password, rol, direccion, localidad, provincia, status, longitud, latitud]
   );
 }
 
@@ -28,9 +28,9 @@ const insertDatosLogopeda = ({usuario_id, telefono, infancia_o_adulto}) => {
   );
 }
 
-const updateUsuario = ({id, nombre, apellidos, email, direccion, localidad, provincia}) => {
-  return db.query('update usuarios set nombre=?, apellidos=?, email=?, direccion=?, localidad=?, provincia=? where id = ?',
-  [nombre, apellidos, email, direccion, localidad, provincia, id]
+const updateUsuario = ({id, nombre, apellidos, email, direccion, localidad, provincia, longitud, latitud}) => {
+  return db.query('update usuarios set nombre=?, apellidos=?, email=?, direccion=?, localidad=?, provincia=?, longitud=?, latitud=? where id = ?',
+  [nombre, apellidos, email, direccion, localidad, provincia, longitud, latitud, id]
   );
 }
 

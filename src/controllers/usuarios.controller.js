@@ -1,7 +1,7 @@
 const UsuarioModel = require('../models/usuario.model');
 const bcrypt = require('bcryptjs');
 const fs = require('fs');
-const { createToken } = require('../helpers/utils');
+const { createToken, getGeolocation } = require('../helpers/utils');
 
 const getAllUsuarios = async (req, res) => {
   try {
@@ -34,9 +34,12 @@ const getUserByEmail = async (req, res) => {
 const editUserById = async (req, res) => {
   try {
     // TODO: revisar con middle que el id en token es el mismo que en el body, o si es rol admin
+    const coord = await getGeolocation(req.body.direccion, req.body.localidad, req.body.provincia);
+    [req.body.latitud, req.body.longitud] = coord;
     const [result] = await UsuarioModel.updateUsuario({ id: req.body.id,
       nombre: req.body.nombre, apellidos: req.body.apellidos, email: req.body.email, 
-      direccion: req.body.direccion, localidad: req.body.localidad, provincia: req.body.provincia
+      direccion: req.body.direccion, localidad: req.body.localidad, provincia: req.body.provincia,
+      longitud: req.body.longitud, latitud: req.body.latitud
     });
     if (req.body.rol === 'logopeda') {
       const [result2] = await UsuarioModel.updatetDatosLogopeda({
@@ -94,10 +97,8 @@ const editImagen = async (req, res) => {
   const newPath = req.file.path + extension;
   // Muevo la imagen para que resiba la extensión
   fs.renameSync(req.file.path, newPath);
-
   // Modifico el BODY para poder incluir el nombre de la imagen en la BD
   req.body.imagen = newName;
-
   try {
       const [[user]] = req.user;
       const [response] = await UsuarioModel.updateImagen(user.id, req.body.imagen);
@@ -113,10 +114,13 @@ const editImagen = async (req, res) => {
 const registerUser = async (req, res) => {
   try {
     req.body.password = bcrypt.hashSync(req.body.password, 8);
+    const coord = await getGeolocation(req.body.direccion, req.body.localidad, req.body.provincia);
+    [req.body.latitud, req.body.longitud] = coord;
     const [result] = await UsuarioModel.insertUsuario({
       nombre: req.body.nombre, apellidos: req.body.apellidos, email: req.body.email, 
       password: req.body.password, rol: req.body.rol, direccion: req.body.direccion, 
-      localidad: req.body.localidad, provincia: req.body.provincia, status: req.body.status
+      localidad: req.body.localidad, provincia: req.body.provincia, status: req.body.status,
+      longitud: req.body.longitud, latitud: req.body.latitud
     });
     if (req.body.rol === 'logopeda') {
       const [result2] = await UsuarioModel.insertDatosLogopeda(
