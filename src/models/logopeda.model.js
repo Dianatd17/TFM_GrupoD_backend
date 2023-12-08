@@ -34,6 +34,13 @@ const selectclasById = (id) =>{
 const selectConnectionLogopedasHasClientes = (logopeda_id, cliente_id) => {
     return db.query("SELECT count(*)as cnt FROM  logopedas_has_clientes  WHERE logopeda_id=? and cliente_id =? and fecha_fin is null", [logopeda_id, cliente_id]);
 }
+
+//Se busca en la tabla logopedas_has_clientes los comentarios 
+const selectComentariosById = (id) => {
+    const query_comentarios = "select u.nombre,l.comentarios,l.puntuacion from logopedas_has_clientes l,usuarios u where l.cliente_id = u.id and  logopeda_id = ? and puntuacion > 0"
+
+    return db.query(query_comentarios, [id]);
+}
 const insertConnection = ({ logopeda_id, cliente_id, comentarios, puntuacion, fecha_inicio }) => {
     return db.query('INSERT INTO logopedas_has_clientes (logopeda_id, cliente_id,comentarios,puntuacion, fecha_inicio) VALUES (?,?,?,?,?)',
         [logopeda_id, cliente_id, comentarios, puntuacion, fecha_inicio]);
@@ -54,6 +61,7 @@ module.exports = {
     selectLogopedasByEdad,
     selectLogopedasByEspecialidad,
     selectConnectionLogopedasHasClientes,
+    selectComentariosById,
     insertConnection,
     updateConnection,
     selectClientesByLogopedas,
