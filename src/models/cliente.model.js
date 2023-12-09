@@ -8,15 +8,15 @@ const selectClienteById = (clienteId) => {
 
 const selectLogopedaByClientes = (idCliente) => {
   return db.query(
-    `SELECT l.logopeda_id, l.cliente_id, u.nombre, u.apellidos, u.imagen,u.rol,u.status as estado_u, l.fecha_inicio, l.status
-    FROM logopedas.logopedas_has_clientes l, logopedas.usuarios u
-    WHERE l.logopeda_id = u.id AND l.cliente_id = ?;`,
+    `SELECT u.nombre, u.apellidos, u.email, u.localidad, d.precio, d.experiencia, d.infancia_o_adulto,d.descripcion, u.imagen, u.rol, u.status as estado_u, l.fecha_inicio, l.status
+    FROM logopedas.logopedas_has_clientes l, logopedas.usuarios u, logopedas.logopeda_datos d
+    WHERE l.logopeda_id = u.id AND l.cliente_id = 12 AND l.logopeda_id = d.usuario_id;`,
     [idCliente]
   );
 };
 
 module.exports = {
-    selectAllClientes,
-    selectClienteById,
+  selectAllClientes,
+  selectClienteById,
   selectLogopedaByClientes,
 };

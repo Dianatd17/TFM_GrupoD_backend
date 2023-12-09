@@ -20,15 +20,26 @@ const selectLogopedasByEspecialidad = (idespecialidad) => {
 
 
 const selectClientesByLogopedas = (idLogopeda) =>{
-    return db.query(`SELECT l.logopeda_id, l.cliente_id, u.nombre, u.apellidos, u.imagen, l.fecha_inicio,u.rol,u.status as estado_u, l.status
+    return db.query(`SELECT l.id ,l.logopeda_id, l.cliente_id, u.nombre, u.apellidos, u.email, u.localidad,  u.imagen, l.fecha_inicio,u.rol,u.status as estado_u, l.status
     FROM logopedas.logopedas_has_clientes l, logopedas.usuarios u
     WHERE l.cliente_id = u.id AND l.logopeda_id = ?;`,[idLogopeda])
+}
+
+const selectclasById = (id) =>{
+    return db.query(`Select * FROM logopedas.logopedas_has_clientes WHERE id = ?`,[id])
 }
 
 
 //Se busca en la tabla Logopeda_Has_Clientes si ya existe un registro entre el cliente y el logopeda activo
 const selectConnectionLogopedasHasClientes = (logopeda_id, cliente_id) => {
     return db.query("SELECT count(*)as cnt FROM  logopedas_has_clientes  WHERE logopeda_id=? and cliente_id =? and fecha_fin is null", [logopeda_id, cliente_id]);
+}
+
+//Se busca en la tabla logopedas_has_clientes los comentarios 
+const selectComentariosById = (id) => {
+    const query_comentarios = "select u.nombre,l.comentarios,l.puntuacion from logopedas_has_clientes l,usuarios u where l.cliente_id = u.id and  logopeda_id = ? and puntuacion > 0"
+
+    return db.query(query_comentarios, [id]);
 }
 const insertConnection = ({ logopeda_id, cliente_id, comentarios, puntuacion, fecha_inicio }) => {
     return db.query('INSERT INTO logopedas_has_clientes (logopeda_id, cliente_id,comentarios,puntuacion, fecha_inicio) VALUES (?,?,?,?,?)',
@@ -40,13 +51,20 @@ const updateConnection = (id, { comentarios, puntuacion, fecha_fin, status }) =>
         [comentarios, puntuacion, fecha_fin, status, id]);
 }
 
+const updateClase = (claseId, {id, logopeda_id, cliente_id, comentarios, puntuacion, fecha_inicio, fecha_fin, status}) =>{
+    return db.query('UPDATE logopedas_has_clientes SET id = ?, logopeda_id = ?, cliente_id = ?, comentarios = ?, puntuacion = ?, fecha_inicio = ?,  fecha_fin = ?, status = ? WHERE id = ?' , [id, logopeda_id, cliente_id, comentarios, puntuacion, fecha_inicio, fecha_fin, status, claseId])
+}
+
 module.exports = {
     selectAllLogopedas,
     selectLogopedaById,
     selectLogopedasByEdad,
     selectLogopedasByEspecialidad,
     selectConnectionLogopedasHasClientes,
+    selectComentariosById,
     insertConnection,
     updateConnection,
-    selectClientesByLogopedas
+    selectClientesByLogopedas,
+    selectclasById,
+    updateClase
 }

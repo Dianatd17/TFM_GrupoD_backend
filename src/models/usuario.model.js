@@ -9,12 +9,16 @@ const selectUsuarioById = (usuarioId) => {
 };
 
 const selectUsuarioByEmail = (email) => {
-  return db.query(`${query_start} where email = ?`, [email])
+  return db.query(`${query_start} where email = ?`, [email]);
 }
 
-const insertUsuario = ({nombre, apellidos, email, password, rol, direccion, localidad, provincia, status}) => {
-  return db.query('insert into usuarios (nombre, apellidos, email, password, rol, direccion, localidad, provincia, status) values (?, ?, ?, ?, ?, ?, ?, ?, ?)',
-  [nombre, apellidos, email, password, rol, direccion, localidad, provincia, status]
+const selectImagen = (id) => {
+  return db.query('select imagen from usuarios where id = ?', [id]);
+}
+
+const insertUsuario = ({nombre, apellidos, email, password, rol, direccion, localidad, provincia, status, longitud, latitud}) => {
+  return db.query('insert into usuarios (nombre, apellidos, email, password, rol, direccion, localidad, provincia, status, longitud, latitud) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)',
+  [nombre, apellidos, email, password, rol, direccion, localidad, provincia, status, longitud, latitud]
   );
 }
 
@@ -24,9 +28,9 @@ const insertDatosLogopeda = ({usuario_id, telefono, infancia_o_adulto}) => {
   );
 }
 
-const updateUsuario = ({id, nombre, apellidos, email, direccion, localidad, provincia}) => {
-  return db.query('update usuarios set nombre=?, apellidos=?, email=?, direccion=?, localidad=?, provincia=? where id = ?',
-  [nombre, apellidos, email, direccion, localidad, provincia, id]
+const updateUsuario = ({id, nombre, apellidos, email, direccion, localidad, provincia, longitud, latitud}) => {
+  return db.query('update usuarios set nombre=?, apellidos=?, email=?, direccion=?, localidad=?, provincia=?, longitud=?, latitud=? where id = ?',
+  [nombre, apellidos, email, direccion, localidad, provincia, longitud, latitud, id]
   );
 }
 
@@ -40,13 +44,19 @@ const updatePassword = (id, password) => {
   return db.query('update usuarios set password=? where id = ?', [password, id]);
 }
 
+const updateImagen = (id, path) => {
+  return db.query('update usuarios set imagen = ? where id = ?', [path, id]);
+}
+
 module.exports = { 
   selectAllUsuarios, 
   selectUsuarioById, 
   selectUsuarioByEmail,
+  selectImagen,
   insertUsuario, 
   insertDatosLogopeda,
   updateUsuario,
   updatetDatosLogopeda,
-  updatePassword
+  updatePassword,
+  updateImagen
 };
