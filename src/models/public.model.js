@@ -9,4 +9,6 @@ const getByMap = () => {
 };
 
 
+
+
 module.exports = { getByRating, getByMap };
