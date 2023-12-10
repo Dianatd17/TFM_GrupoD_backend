@@ -39,7 +39,7 @@ const postEmail = async (req, res) => {
 
 
         const mailOptions = {
-            from: "tfmgrupod@gmail.com",
+            from: process.env.MAILUSER,
             to: emailsDestino,
             subject: "Nuevo logopeda pendiente de activar",
             html: msghtml,
