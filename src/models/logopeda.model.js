@@ -18,6 +18,9 @@ const selectLogopedasByEspecialidad = (idespecialidad) => {
     return db.query(`${query_start} and u.id in (select logopeda_id as id from especialidades_has_logopedas where especialidad_id = ?) ${query_end}`, [idespecialidad]);
 }
 
+const selectLogopedasPendientes = () => {
+    return db.query(`select u.id, u.nombre, u.apellidos, u.email, d.telefono, u.longitud, u.latitud, u.direccion, u.localidad, u.provincia, u.imagen, d.precio, d.experiencia, d.descripcion, d.infancia_o_adulto, AVG(h.puntuacion) as puntuacion from usuarios u left join logopeda_datos d on u.id = d.usuario_id left join logopedas_has_clientes h on u.id = h.logopeda_id where u.rol = 'logopeda' and u.status = 0 ${query_end}`);
+}
 
 const selectClientesByLogopedas = (idLogopeda) =>{
     return db.query(`SELECT l.id ,l.logopeda_id, l.cliente_id, u.nombre, u.apellidos, u.email, u.localidad,  u.imagen, l.fecha_inicio,u.rol,u.status as estado_u, l.status
@@ -60,6 +63,7 @@ module.exports = {
     selectLogopedaById,
     selectLogopedasByEdad,
     selectLogopedasByEspecialidad,
+    selectLogopedasPendientes,
     selectConnectionLogopedasHasClientes,
     selectComentariosById,
     insertConnection,

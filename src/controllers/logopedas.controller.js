@@ -73,6 +73,18 @@ const getByEspecialidadId = async (req, res) => {
   }
 };
 
+const getLogopedasPendientes = async (req, res) => {
+  try {
+    const result = await LogopedaModel.selectLogopedasPendientes();
+    if (result) {
+      res.status(200).json(result[0]);
+    } else {
+      res.status(204).json({ msg: `no hay resultados` });
+    }
+  } catch (error) {
+    res.status(500).json({ Error: error.message });
+  }
+}
 
 const getClientesByLogopedas = async (req, res) => {
   try {
@@ -171,6 +183,7 @@ module.exports = {
   getLogopedaById,
   getInfancia,
   getAdultos,
+  getLogopedasPendientes,
   getByEspecialidadId,
   getComentariosById,
   postConectarLogopeda,
