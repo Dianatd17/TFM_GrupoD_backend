@@ -28,6 +28,10 @@ const selectClientesByLogopedas = (idLogopeda) =>{
     WHERE l.cliente_id = u.id AND l.logopeda_id = ?;`,[idLogopeda])
 }
 
+const selectClass = (logopedaId, clienteId) =>{
+    return db.query('select * FROM logopedas.logopedas_has_clientes WHERE logopeda_id = ? and cliente_id = ?', [logopedaId, clienteId])
+}
+
 const selectclasById = (id) =>{
     return db.query(`Select * FROM logopedas.logopedas_has_clientes WHERE id = ?`,[id])
 }
@@ -69,6 +73,7 @@ module.exports = {
     insertConnection,
     updateConnection,
     selectClientesByLogopedas,
+    selectClass,
     selectclasById,
     updateClase
 }

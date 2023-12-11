@@ -106,6 +106,16 @@ const getClasById = async (req, res) => {
   }
 }
 
+const getClass = async (req, res) => {
+  try {
+    const { logopeda_id, cliente_id } = req.body
+    const [result] = await LogopedaModel.selectClass(logopeda_id, cliente_id);
+    res.json(result)
+  } catch (error) {
+    res.status(500).json({ Error: error.message })
+  }
+}
+
 const getComentariosById = async (req, res) => {
   try {
     const { id } = req.params;
@@ -190,5 +200,6 @@ module.exports = {
   getClientesByLogopedas,
   putConectarLogopeda,
   getClasById,
+  getClass,
   putStatusClases
 }
