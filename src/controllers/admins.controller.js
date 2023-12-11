@@ -1,19 +1,44 @@
 const AdminModel = require('../models/admin.model');
 
-const putVerificarIdlogopeda = async (req, res) => {
+const putVerificarUsuario = async (req, res) => {
   try {
-    res.send('(si es admin)');
+    const { usuarioId } = req.params;
+    const [result] = await AdminModel.updateStatus(usuarioId, 1);
+    console.log(result);
+    if (!result) {
+      res.json({ fatal: "No se ha podido actualizar el estado" })
+    }
+    res.json(result);
   } catch (error) {
-    res.json({ Error: error.message });
+    res.json({ fatal: error.message });
   }
 };
 
-const putVerificarIdcliente = async (req, res) => {
+const putRechazarUsuario = async (req, res) => {
   try {
-    res.send('(si es admin)');
+    const { usuarioId } = req.params;
+    const [result] = await AdminModel.updateStatus(usuarioId, -1);
+    console.log(result);
+    if (!result) {
+      res.json({ fatal: "No se ha podido actualizar el estado" })
+    }
+    res.json(result);
   } catch (error) {
-    res.json({ Error: error.message });
+    res.json({ fatal: error.message });
   }
 };
 
-module.exports = { putVerificarIdlogopeda, putVerificarIdcliente };
+const putDesactivarUsuario = async (req, res) => {
+  try {
+    const { usuarioId } = req.params;
+    const [result] = await AdminModel.updateStatus(usuarioId, 0);
+    if (!result) {
+      res.json({ fatal: "No se ha podido actualizar el estado" })
+    }
+    res.json(result);
+  } catch (error) {
+    res.json({ fatal: error.message });
+  }
+};
+
+module.exports = { putVerificarUsuario, putRechazarUsuario, putDesactivarUsuario };
