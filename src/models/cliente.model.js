@@ -1,5 +1,5 @@
 const selectAllClientes = () => {
-  return db.query('select * from usuarios where rol = cliente');
+  return db.query("select * from usuarios where rol = 'cliente'");
 };
 
 const selectClienteById = (clienteId) => {
